@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>User Registration</title>
+    </head>
+    <body>
+        <h2>Form Đăng Ký Người Dùng</h2>
+        <form action="../UserRegistrationServlet" method="post">
+            <label for="name">Họ và tên:</label><br>
+            <input type="text" id="name" name="name" required><br><br>
+
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" name="email" required><br><br>
+
+            <label for="password">Mật khẩu:</label><br>
+            <input type="password" id="password" name="password" required><br><br>
+
+            <button type="submit">Đăng ký</button>
+        </form>
+    </body>
+</html>

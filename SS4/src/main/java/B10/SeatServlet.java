@@ -23,7 +23,7 @@ public class SeatServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setAttribute("seats", seats);
-        request.getRequestDispatcher("BaiTap/Bai9/Bai9.jsp").forward(request, response);
+        request.getRequestDispatcher("B10/seatList.jsp").forward(request, response);
     }
 
     @Override

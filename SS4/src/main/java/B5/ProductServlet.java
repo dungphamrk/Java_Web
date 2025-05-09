@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/productList")
+@WebServlet(name = "B5.ProductServlet", value = "/B5.ProductServlet")
 public class ProductServlet extends HttpServlet {
     private List<Product> products;
 
@@ -55,7 +55,7 @@ public class ProductServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doGet(request, response); // Xử lý POST giống GET
+        doGet(request, response);
     }
 
     @Override

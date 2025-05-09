@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@WebServlet("/productList")
+@WebServlet(name = "B7.ProductServlet", value = "/B7.ProductServlet")
 public class ProductServlet extends HttpServlet {
     private List<Product> products;
 

@@ -29,17 +29,24 @@ public class ProductServlet extends HttpServlet {
         response.setContentType("text/html; charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
 
-        // Lấy tham số ID từ form tìm kiếm
-        int searchId = Integer.parseInt(request.getParameter("id"));
         Product foundProduct = null;
+        Integer searchId = null;
 
-        // Tìm sản phẩm theo ID nếu có
-        if (searchId != 0 ) {
-            for (Product product : products) {
-                if (product.getId()==(searchId)) {
-                    foundProduct = product;
-                    break;
+        // Lấy tham số ID từ form tìm kiếm
+        String idParam = request.getParameter("id");
+        if (idParam != null && !idParam.trim().isEmpty()) {
+            try {
+                searchId = Integer.parseInt(idParam);
+                // Tìm sản phẩm theo ID nếu có
+                for (Product product : products) {
+                    if (product.getId() == searchId) {
+                        foundProduct = product;
+                        break;
+                    }
                 }
+            } catch (NumberFormatException e) {
+                // Log lỗi nếu cần và tiếp tục với searchId = null
+                request.setAttribute("errorMessage", "ID không hợp lệ. Vui lòng nhập số nguyên.");
             }
         }
 
@@ -51,7 +58,6 @@ public class ProductServlet extends HttpServlet {
         // Chuyển hướng đến JSP
         request.getRequestDispatcher("B5/productList.jsp").forward(request, response);
     }
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

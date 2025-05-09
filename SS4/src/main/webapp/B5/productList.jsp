@@ -52,61 +52,66 @@
       }
     </style>
   </head>
-  <body>
-    <h2>Danh Sách Sản Phẩm</h2>
+    <body>
+        <h2>Danh Sách Sản Phẩm</h2>
 
-    <!-- Form tìm kiếm -->
-    <div class="form-container">
-      <form action="productList" method="post">
-        <label for="id">Nhập ID sản phẩm cần tìm:</label>
-        <input type="text" id="id" name="id" placeholder="Ví dụ: P001">
-        <button type="submit">Tìm</button>
-      </form>
-    </div>
+        <!-- Form tìm kiếm -->
+        <div class="form-container">
+            <form action="B5.ProductServlet" method="post">
+                <label for="id">Nhập ID sản phẩm cần tìm:</label>
+                <input type="text" id="id" name="id" placeholder="Ví dụ: 1">
+                <button type="submit">Tìm</button>
+            </form>
+        </div>
 
-    <!-- Kết quả tìm kiếm -->
-    <c:if test="${searchId != null}">
-      <c:choose>
-        <c:when test="${foundProduct != null}">
-          <p class="message success">Sản phẩm được tìm thấy:</p>
-          <table>
+        <!-- Hiển thị thông báo lỗi nếu có -->
+        <c:if test="${not empty errorMessage}">
+            <p class="message error">${errorMessage}</p>
+        </c:if>
+
+        <!-- Kết quả tìm kiếm -->
+        <c:if test="${searchId != null}">
+            <c:choose>
+                <c:when test="${foundProduct != null}">
+                    <p class="message success">Sản phẩm được tìm thấy:</p>
+                    <table>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tên</th>
+                            <th>Giá ($)</th>
+                            <th>Mô tả</th>
+                        </tr>
+                        <tr>
+                            <td>${foundProduct.id}</td>
+                            <td>${foundProduct.name}</td>
+                            <td>${foundProduct.price}</td>
+                            <td>${foundProduct.description}</td>
+                        </tr>
+                    </table>
+                </c:when>
+                <c:otherwise>
+                    <p class="message error">Sản phẩm không tìm thấy</p>
+                </c:otherwise>
+            </c:choose>
+        </c:if>
+
+        <!-- Danh sách tất cả sản phẩm -->
+        <h3>Tất Cả Sản Phẩm</h3>
+        <table>
             <tr>
-              <th>ID</th>
-              <th>Tên</th>
-              <th>Giá ($)</th>
-              <th>Mô tả</th>
+                <th>ID</th>
+                <th>Tên</th>
+                <th>Giá ($)</th>
+                <th>Mô tả</th>
             </tr>
-            <tr>
-              <td>${foundProduct.id}</td>
-              <td>${foundProduct.name}</td>
-              <td>${foundProduct.price}</td>
-              <td>${foundProduct.description}</td>
-            </tr>
-          </table>
-        </c:when>
-        <c:otherwise>
-          <p class="message error">Sản phẩm không tìm thấy</p>
-        </c:otherwise>
-      </c:choose>
-    </c:if>
-
-    <!-- Danh sách tất cả sản phẩm -->
-    <h3>Tất Cả Sản Phẩm</h3>
-    <table>
-      <tr>
-        <th>ID</th>
-        <th>Tên</th>
-        <th>Giá ($)</th>
-        <th>Mô tả</th>
-      </tr>
-      <c:forEach var="product" items="${products}">
-        <tr>
-          <td>${product.id}</td>
-          <td>${product.name}</td>
-          <td>${product.price}</td>
-          <td>${product.description}</td>
-        </tr>
-      </c:forEach>
-    </table>
-  </body>
+            <c:forEach var="product" items="${products}">
+                <tr>
+                    <td>${product.id}</td>
+                    <td>${product.name}</td>
+                    <td>${product.price}</td>
+                    <td>${product.description}</td>
+                </tr>
+            </c:forEach>
+        </table>
+    </body>
 </html>

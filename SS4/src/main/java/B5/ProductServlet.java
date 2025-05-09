@@ -49,7 +49,7 @@ public class ProductServlet extends HttpServlet {
         request.setAttribute("searchId", searchId);
 
         // Chuyển hướng đến JSP
-        request.getRequestDispatcher("B4/productList.jsp").forward(request, response);
+        request.getRequestDispatcher("B5/productList.jsp").forward(request, response);
     }
 
     @Override

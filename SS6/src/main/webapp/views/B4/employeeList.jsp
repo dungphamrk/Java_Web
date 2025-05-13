@@ -15,7 +15,7 @@
             <div class="input-group w-25">
                 <input type="number" name="id" class="form-control" placeholder="Search by ID" required>
                 <input type="hidden" name="action" value="search">
-                <button type="submit" class="btn btn   <button type="submit" class="btn btn-outline-secondary">Search</button>
+               <button type="submit" class="btn btn-outline-secondary">Search</button>
             </div>
         </form>
 
@@ -37,7 +37,7 @@
                     <tr>
                         <td>${employee.id}</td>
                         <td>${employee.name}</td>
-                        <td><fmt:formatDate value="${employee.birthday}" pattern="yyyy-MM-dd"/></td>
+                        <td>${employee.birthday}</td>
                         <td>${employee.phone}</td>
                         <td><fmt:formatNumber value="${employee.salary}" type="number" minFractionDigits="2" maxFractionDigits="2"/></td>
                         <td>${employee.position}</td>

@@ -16,21 +16,18 @@ public class CourseController {
     private final List<Course> courseList = new ArrayList<>();
     private int nextId = 1;
 
-    // Xem danh sách khóa học
     @GetMapping
     public String listCourses(Model model) {
         model.addAttribute("courses", courseList);
         return "listCourse";
     }
 
-    // Hiển thị form thêm khóa học
     @GetMapping("/add")
     public String showAddForm(Model model) {
         model.addAttribute("course", new Course());
         return "addCourse";
     }
 
-    // Xử lý khi submit form thêm khóa học
     @PostMapping("/add")
     public String addCourse(@ModelAttribute Course course, RedirectAttributes redirectAttributes) {
         course.setId(nextId++);

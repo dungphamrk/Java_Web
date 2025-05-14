@@ -2,12 +2,12 @@ package com.data.ss7.controller;
 
 import com.data.ss7.model.Product;
 import com.data.ss7.model.CartItem;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.servlet.http.HttpSession;
 import java.util.*;
 
 @Controller

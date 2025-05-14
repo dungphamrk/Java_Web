@@ -12,7 +12,7 @@ repositories {
 
 ext {
     junitVersion = '5.10.2'
-    springVersion = '6.1.6'
+    springVersion = "5.3.22"
 }
 
 sourceCompatibility = '17'
@@ -23,14 +23,13 @@ tasks.withType(JavaCompile) {
 }
 
 dependencies {
-    compileOnly('jakarta.servlet:jakarta.servlet-api:6.0.0')
+    compileOnly('javax.servlet:javax.servlet-api:4.0.1')
 
     implementation("org.springframework:spring-core:${springVersion}")
     implementation("org.springframework:spring-web:${springVersion}")
     implementation("org.springframework:spring-webmvc:${springVersion}")
-    implementation('jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:3.0.0')
-    implementation('org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.1')
-    implementation('mysql:mysql-connector-j:8.0.33')
+    implementation('javax.servlet:jstl:1.2')
+
     compileOnly('org.projectlombok:lombok:1.18.32')
     annotationProcessor('org.projectlombok:lombok:1.18.32')
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")

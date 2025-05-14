@@ -18,7 +18,6 @@ public class AppConfig implements WebMvcConfigurer {
     @Bean
     public ViewResolver viewResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-
         viewResolver.setPrefix("/views/");
         viewResolver.setSuffix(".jsp");
 
@@ -26,9 +25,8 @@ public class AppConfig implements WebMvcConfigurer {
     }
     @Override
     public void configurePathMatch(PathMatchConfigurer configurer) {
-        // Cho phép matrix variables
         UrlPathHelper urlPathHelper = new UrlPathHelper();
-        urlPathHelper.setRemoveSemicolonContent(false); // không loại bỏ dấu ;
+        urlPathHelper.setRemoveSemicolonContent(false);
         configurer.setUrlPathHelper(urlPathHelper);
     }
 }

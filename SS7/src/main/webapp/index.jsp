@@ -10,7 +10,7 @@
 <br/>
 <h1>Hello world</h1>
 <ul>
-    <li><a href="home">BAi 1+ bai 2</a></li>
+    <li><a href="home">Bai 1+ bai 2</a></li>
     <li><a href="error">Bai 3</a></li>
     <li><a href="form">Bai 4</a></li>
     <li><a href="index">Bai 5</a></li>

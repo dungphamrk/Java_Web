@@ -28,7 +28,7 @@ public class BookController extends HttpServlet {
         try {
             switch(action == null ? "" : action) {
                 case "add":
-                    req.getRequestDispatcher("2s/B1_2/lib/formAdd.jsp").forward(req, resp);
+                    req.getRequestDispatcher("views/B1_2/lib/formAdd.jsp").forward(req, resp);
                     break;
                 case "edit":
                     String code = req.getParameter("bookCode");

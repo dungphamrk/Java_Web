@@ -1,4 +1,4 @@
-package com.example.ss8.config;
+package com.data.ss8.config;
 
 import javax.servlet.Filter;
 import org.springframework.web.filter.CharacterEncodingFilter;

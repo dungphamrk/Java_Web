@@ -1,4 +1,4 @@
-package com.example.ss8.config;
+package com.data.ss8.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -12,13 +12,13 @@ import org.springframework.web.util.UrlPathHelper;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan("com.example.ss8")
+@ComponentScan("com.data.ss8")
 public class WebConfig implements WebMvcConfigurer {
 
     @Bean
     public ViewResolver viewResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-        viewResolver.setPrefix("/views/");
+        viewResolver.setPrefix("/WEB-INF/views/");
         viewResolver.setSuffix(".jsp");
 
         return viewResolver;

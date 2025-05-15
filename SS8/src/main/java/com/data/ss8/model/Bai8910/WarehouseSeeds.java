@@ -1,4 +1,4 @@
-package com.example.ss8.Model;
+package com.data.ss8.model.Bai8910;
 
 public class WarehouseSeeds {
     private int id;

@@ -1,8 +1,8 @@
-package com.example.ss8.Controller;
+package com.data.ss8.controller.Bai8910;
 
-import com.example.ss8.Model.Seed;
-import com.example.ss8.Model.User;
-import com.example.ss8.Model.WarehouseSeeds;
+import com.data.ss8.model.Bai8910.Seed;
+import com.data.ss8.model.Bai8910.User;
+import com.data.ss8.model.Bai8910.WarehouseSeeds;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -31,19 +31,19 @@ public class GameController {
 
     @GetMapping("/register")
     public String showRegister() {
-        return "/register";
+        return "B8910/register";
     }
 
     @PostMapping("/register")
     public String registerUser(@RequestParam String username, @RequestParam String password, @RequestParam String email) {
         User newUser = new User(users.size() + 1, username, password, email);
         users.add(newUser);
-        return "/login";
+        return "B8910/login";
     }
 
     @GetMapping("/login")
     public String showLogin() {
-        return "/login";
+        return "B8910/login";
     }
 
     @PostMapping("/login")
@@ -51,22 +51,22 @@ public class GameController {
         for (User user : users) {
             if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
                 loggedInUser = user;
-                return "/farm";
+                return "B8910/farm";
             }
         }
-        return "/login";
+        return "B8910/login";
     }
 
     @GetMapping("/shop")
     public String showShop(Model model) {
         model.addAttribute("seeds", seeds);
-        return "/shop";
+        return "B8910/shop";
     }
 
     @GetMapping("/warehouse")
     public String showWarehouse(Model model) {
         model.addAttribute("warehouse", warehouse);
-        return "/warehouse";
+        return "B8910/warehouse";
     }
 
     @PostMapping("/buySeed")
@@ -94,19 +94,19 @@ public class GameController {
                 warehouse.add(new WarehouseSeeds(warehouse.size() + 1, quantity, selectedSeed));
             }
         }
-        return "/shop";
+        return "B8910/shop";
     }
 
 
     @GetMapping("/farm")
     public String showFarm(Model model) {
         if (loggedInUser == null) {
-            return "/login";
+            return "B8910/login";
         }
         model.addAttribute("warehouse", warehouse);
         model.addAttribute("farm", farm);
         model.addAttribute("seeds", seeds);
-        return "/farm";
+        return "B8910/farm";
     }
 
     @PostMapping("/plantSeed")

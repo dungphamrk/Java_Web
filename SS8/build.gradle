@@ -25,6 +25,9 @@ tasks.withType(JavaCompile) {
 dependencies {
     compileOnly('javax.servlet:javax.servlet-api:4.0.1')
 
+    compileOnly 'org.projectlombok:lombok:1.18.32'
+    annotationProcessor('org.projectlombok:lombok:1.18.32')
+
     implementation("org.springframework:spring-core:${springVersion}")
     implementation("org.springframework:spring-web:${springVersion}")
     implementation("org.springframework:spring-webmvc:${springVersion}")

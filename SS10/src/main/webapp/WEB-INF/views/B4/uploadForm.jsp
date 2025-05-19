@@ -9,7 +9,7 @@
     <body>
         <div class="form-container">
             <h2>Upload Your Avatar</h2>
-            <form method="post" action="B4/uploadAvatar" enctype="multipart/form-data">
+            <form method="post" action="/B4/uploadAvatar" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="file">Avatar:</label>
                     <input type="file" name="file" id="file" accept="image/*" required>

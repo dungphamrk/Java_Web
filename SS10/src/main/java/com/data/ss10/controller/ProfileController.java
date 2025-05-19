@@ -1,6 +1,5 @@
 package com.data.ss10.controller;
 
-
 import com.data.ss10.model.UserProfile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,13 +10,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("B4")
 public class ProfileController {
 
     // Directory to store uploaded avatars
-    private static final String UPLOAD_DIR = "src/main/resources/";
+    private static final String UPLOAD_DIR = System.getProperty("java.io.tmpdir") + "/avatars/";
 
     @GetMapping("/upload")
     public String showUploadForm(Model model) {
@@ -28,9 +28,21 @@ public class ProfileController {
     @PostMapping("/uploadAvatar")
     public String uploadAvatar(@RequestParam("file") MultipartFile file, Model model) throws IOException {
         if (!file.isEmpty()) {
-            String uploadPath = UPLOAD_DIR + file.getOriginalFilename();
-            Files.write(Paths.get(uploadPath), file.getBytes());
-            model.addAttribute("message", "Upload thành công: " + file.getOriginalFilename());
+            // Create upload directory if it doesn't exist
+            Path uploadDirPath = Paths.get(UPLOAD_DIR);
+            if (!Files.exists(uploadDirPath)) {
+                Files.createDirectories(uploadDirPath);
+            }
+
+            // Generate unique file name to avoid conflicts
+            String originalFileName = file.getOriginalFilename();
+            String fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
+            String uniqueFileName = UUID.randomUUID().toString() + fileExtension;
+            Path uploadPath = Paths.get(UPLOAD_DIR + uniqueFileName);
+
+            // Save the file
+            Files.write(uploadPath, file.getBytes());
+            model.addAttribute("message", "Upload thành công: " + uniqueFileName);
         } else {
             model.addAttribute("message", "Vui lòng chọn file.");
         }

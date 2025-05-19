@@ -55,6 +55,6 @@ public class ProjectController {
     @GetMapping
     public String listProjects(Model model) {
         model.addAttribute("projects", projectList);
-        return "/bt7/projectList";
+        return "B7/projectList";
     }
 }

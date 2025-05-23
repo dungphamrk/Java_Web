@@ -28,7 +28,6 @@ public class ProfileController {
     @PostMapping("/uploadAvatar")
     public String uploadAvatar(@RequestParam("file") MultipartFile file, Model model) throws IOException {
         if (!file.isEmpty()) {
-            // Create upload directory if it doesn't exist
             Path uploadDirPath = Paths.get(UPLOAD_DIR);
             if (!Files.exists(uploadDirPath)) {
                 Files.createDirectories(uploadDirPath);

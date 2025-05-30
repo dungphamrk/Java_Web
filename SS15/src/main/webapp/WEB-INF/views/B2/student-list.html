@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Danh sách sinh viên</title>
+    </head>
+    <body>
+        <div th:replace="B4/header :: header"></div>
+        <h2>Danh sách sinh viên</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Mã SV</th>
+                    <th>Họ tên</th>
+                    <th>Tuổi</th>
+                    <th>Lớp</th>
+                    <th>Email</th>
+                    <th>Địa chỉ</th>
+                    <th>Điện thoại</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!--/*@thymesVar id="students" type="com.data.ss15.model.Student"*/-->
+                <tr th:each="student : ${students}">
+                    <td th:text="${student.id}" ></td>
+                    <td th:text="${student.name}"></td>
+                    <td th:text="${student.age}"></td>
+                    <td th:text="${student.className}"></td>
+                    <td th:text="${student.email}"></td>
+                    <td th:text="${student.address}"></td>
+                    <td th:text="${student.phone}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+    <div th:replace="B4/footer :: footer"></div>
+</html>

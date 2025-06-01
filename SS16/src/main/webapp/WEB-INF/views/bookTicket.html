@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Đặt vé xe</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    </head>
+    <body class="bg-gray-100">
+        <div class="container mx-auto p-4">
+            <h2 class="text-2xl font-bold mb-6 text-center">Đặt vé xe</h2>
+            <div th:if="${error}" class="text-red-500 text-sm mb-4" th:text="${error}"></div>
+            <div class="mb-4">
+                <h3 class="text-xl font-bold">Thông tin chuyến xe</h3>
+                <p><strong>Điểm đi:</strong> <span th:text="${trip.departurePoint}"></span></p>
+                <p><strong>Điểm đến:</strong> <span th:text="${trip.destination}"></span></p>
+                <p><strong>Thời gian khởi hành:</strong> <span th:text="${trip.departureTime}"></span></p>
+                <p><strong>Thời gian đến:</strong> <span th:text="${trip.arrivalTime}"></span></p>
+                <p><strong>Xe:</strong> <span th:text="${bus.licensePlate} + ' (' + ${bus.busType} + ')'"></span></p>
+                <p><strong>Số ghế trống:</strong> <span th:text="${trip.seatsAvailable}"></span></p>
+            </div>
+            <form th:action="@{/ticket/book/{tripId}(tripId=${trip.id})}" th:object="${ticket}" method="post">
+                <div class="mb-4">
+                    <label class="block text-gray-700">Ngày khởi hành</label>
+                    <input type="date" th:field="*{departureDate}" class="w-full p-2 border rounded">
+                    <span th:if="${#fields.hasErrors('departureDate')}" th:errors="*{departureDate}" class="text-red-500 text-sm"></span>
+                </div>
+                <div class="mb-4">
+                    <h3 class="text-xl font-bold">Chọn ghế</h3>
+                    <div class="grid grid-cols-4 gap-2">
+                        <div th:each="seat : ${seats}">
+                            <input type="checkbox" th:id="'seat-' + ${seat.id}" th:name="selectedSeats" th:value="${seat.id}"
+                                   th:disabled="${!seat.status}" class="hidden">
+                            <label th:for="'seat-' + ${seat.id}" th:class="${seat.status} ? 'p-2 border rounded bg-green-200 cursor-pointer' : 'p-2 border rounded bg-red-200 cursor-not-allowed'"
+                                   th:text="${seat.nameSeat} + ' (' + ${seat.price} + ' VNĐ)'"></label>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Thanh toán</button>
+            </form>
+            <a th:href="@{/home}" class="mt-4 inline-block text-blue-500">Quay lại</a>
+        </div>
+    </body>
+</html>

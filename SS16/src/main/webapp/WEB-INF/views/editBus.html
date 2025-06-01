@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Sửa xe</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    </head>
+    <body class="bg-gray-100">
+        <div class="container mx-auto p-4">
+            <h2 class="text-2xl font-bold mb-6 text-center">Sửa xe</h2>
+            <form th:action="@{/admin/buses/edit/{id}(id=${bus.id})}" th:object="${bus}" method="post">
+                <div class="mb-4">
+                    <label class="block text-gray-700">Biển số</label>
+                    <input type="text" th:field="*{licensePlate}" class="w-full p-2 border rounded">
+                    <span th:if="${#fields.hasErrors('licensePlate')}" th:errors="*{licensePlate}" class="text-red-500 text-sm"></span>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700">Loại xe</label>
+                    <select th:field="*{busType}" class="w-full p-2 border rounded">
+                        <option value="NORMAL">NORMAL</option>
+                        <option value="VIP">VIP</option>
+                        <option value="LUXURY">LUXURY</option>
+                    </select>
+                    <span th:if="${#fields.hasErrors('busType')}" th:errors="*{busType}" class="text-red-500 text-sm"></span>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700">Số hàng ghế</label>
+                    <input type="number" th:field="*{rowSeat}" class="w-full p-2 border rounded">
+                    <span th:if="${#fields.hasErrors('rowSeat')}" th:errors="*{rowSeat}" class="text-red-500 text-sm"></span>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700">Số cột ghế</label>
+                    <input type="number" th:field="*{colSeat}" class="w-full p-2 border rounded">
+                    <span th:if="${#fields.hasErrors('colSeat')}" th:errors="*{colSeat}" class="text-red-500 text-sm"></span>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700">URL hình ảnh</label>
+                    <input type="text" th:field="*{image}" class="w-full p-2 border rounded">
+                    <span th:if="${#fields.hasErrors('image')}" th:errors="*{image}" class="text-red-500 text-sm"></span>
+                </div>
+                <button type="submit" class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Cập nhật</button>
+            </form>
+            <a th:href="@{/admin/buses}" class="mt-4 inline-block text-blue-500">Quay lại</a>
+        </div>
+    </body>
+</html>

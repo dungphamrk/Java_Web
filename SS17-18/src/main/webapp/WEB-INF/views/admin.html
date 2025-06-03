@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Trang quản lý Admin</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="bg-gray-100">
+        <div class="flex">
+            <!-- Sidebar -->
+            <div th:replace="~{sidebar :: sidebar}"></div>
+
+            <!-- Nội dung chính -->
+            <div class="ml-64 p-4 w-full">
+                <div th:if="${section == 'dashboard'}">
+                    <h2 class="text-2xl font-bold mb-4">Dashboard</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="bg-white p-4 rounded shadow">
+                            <h3 class="text-lg font-semibold">Tổng người dùng</h3>
+                            <p class="text-2xl" th:text="${totalCustomers}"></p>
+                        </div>
+                        <div class="bg-white p-4 rounded shadow">
+                            <h3 class="text-lg font-semibold">Tổng sản phẩm</h3>
+                            <p class="text-2xl" th:text="${totalProducts}"></p>
+                        </div>
+                        <div class="bg-white p-4 rounded shadow">
+                            <h3 class="text-lg font-semibold">Tổng đơn hàng</h3>
+                            <p class="text-2xl" th:text="${totalOrders}"></p>
+                        </div>
+                        <div class="bg-white p-4 rounded shadow">
+                            <h3 class="text-lg font-semibold">Doanh thu tháng <span th:text="${currentMonth} + '/' + ${currentYear}"></span></h3>
+                            <p class="text-2xl" th:text="${#numbers.formatCurrency(revenueThisMonth)}"></p>
+                        </div>
+                        <div class="bg-white p-4 rounded shadow">
+                            <h3 class="text-lg font-semibold">Doanh thu năm <span th:text="${currentYear}"></span></h3>
+                            <p class="text-2xl" th:text="${#numbers.formatCurrency(revenueThisYear)}"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div th:if="${section == 'products'}" th:replace="~{product :: body}"></div>
+                <div th:if="${section == 'customers'}" th:replace="~{customer :: body}"></div>
+                <div th:if="${section == 'orders'}" th:replace="~{order :: body}"></div>
+            </div>
+        </div>
+    </body>
+</html>

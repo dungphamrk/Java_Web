@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <div th:fragment="body" class="container mx-auto p-4">
+    <h2 class="text-2xl font-bold mb-4">Quản lý đơn hàng</h2>
+
+    <!-- Form lọc đơn hàng -->
+    <form th:action="@{/admin(section='orders')}" method="get" class="mb-4">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <input type="text" name="recipientName" class="border rounded p-2" placeholder="Tên người nhận" th:value="${recipientName}">
+        <input type="date" name="startDate" class="border rounded p-2" th:value="${startDate}">
+        <input type="date" name="endDate" class="border rounded p-2" th:value="${endDate}">
+        <select name="status" class="border rounded p-2">
+          <option value="">Tất cả trạng thái</option>
+          <option th:each="statusOption : ${statusOptions}" th:value="${statusOption}" th:text="${statusOption}" th:selected="${statusOption == status}"></option>
+        </select>
+        <button type="submit" class="bg-blue-500 text-white rounded p-2 hover:bg-blue-600">Lọc</button>
+      </div>
+    </form>
+
+    <!-- Thông báo -->
+    <div th:if="${successMessage}" class="bg-green-100 text-green-700 p-3 rounded mb-4" th:text="${successMessage}"></div>
+    <div th:if="${errorMessage}" class="bg-red-100 text-red-700 p-3 rounded mb-4" th:text="${errorMessage}"></div>
+
+    <!-- Bảng đơn hàng -->
+    <div class="overflow-x-auto">
+      <table class="w-full border bg-white">
+        <thead>
+          <tr class="bg-gray-200">
+            <th class="p-2 text-left">ID</th>
+            <th class="p-2 text-left">Tên người nhận</th>
+            <th class="p-2 text-left">Số điện thoại</th>
+            <th class="p-2 text-left">Địa chỉ</th>
+            <th class="p-2 text-left">Tổng tiền</th>
+            <th class="p-2 text-left">Ngày tạo</th>
+            <th class="p-2 text-left">Trạng thái</th>
+            <th class="p-2 text-left">Hành động</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="order : ${orders}" class="border-t">
+            <td class="p-2" th:text="${order.id}"></td>
+            <td class="p-2" th:text="${order.recipientName}"></td>
+            <td class="p-2" th:text="${order.phoneNumber}"></td>
+            <td class="p-2" th:text="${order.address}"></td>
+            <td class="p-2" th:text="${order.totalMoney}"></td>
+            <td class="p-2" th:text="${order.createdAt}"></td>
+            <td class="p-2">
+              <form th:action="@{/orders/update-status/{id}(id=${order.id})}" method="post" class="inline">
+                <select name="status" class="border rounded p-1" onchange="this.form.submit()">
+                  <option th:each="statusOption : ${statusOptions}" th:value="${statusOption}" th:text="${statusOption}" th:selected="${statusOption == order.status}"></option>
+                </select>
+              </form>
+            </td>
+            <td class="p-2">
+              <a th:href="@{/orders/confirm/{id}(id=${order.id})}" class="bg-green-500 text-white rounded p-1 hover:bg-green-600" th:if="${order.status != 'CONFIRMED'}">Xác nhận</a>
+              <a th:href="@{/orders/cancel/{id}(id=${order.id})}" class="bg-red-500 text-white rounded p-1 hover:bg-red-600" th:if="${order.status != 'CANCELLED'}">Hủy</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Phân trang -->
+    <nav class="mt-4">
+      <ul class="flex justify-center space-x-2">
+        <li th:class="${currentPage == 0} ? 'opacity-50 cursor-not-allowed' : ''">
+          <a class="bg-gray-300 rounded p-2" th:href="@{/admin(section='orders', page=${currentPage - 1}, pageSize=${pageSize}, recipientName=${recipientName}, startDate=${startDate}, endDate=${endDate}, status=${status})}">Trước</a>
+        </li>
+        <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}" th:class="${i == currentPage} ? 'bg-blue-500 text-white' : 'bg-gray-300'">
+          <a class="rounded p-2" th:href="@{/admin(section='orders', page=${i}, pageSize=${pageSize}, recipientName=${recipientName}, startDate=${startDate}, endDate=${endDate}, status=${status})}" th:text="${i + 1}"></a>
+        </li>
+        <li th:class="${currentPage == totalPages - 1} ? 'opacity-50 cursor-not-allowed' : ''">
+          <a class="bg-gray-300 rounded p-2" th:href="@{/admin(section='orders', page=${currentPage + 1}, pageSize=${pageSize}, recipientName=${recipientName}, startDate=${startDate}, endDate=${endDate}, status=${status})}">Tiếp</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</html>

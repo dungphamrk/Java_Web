@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <div th:fragment="sidebar" class="w-64 bg-gray-800 text-white h-screen fixed">
+      <div class="p-4">
+        <h2 class="text-xl font-bold mb-4">Quản lý Admin</h2>
+        <ul class="space-y-2">
+          <li>
+            <a th:href="@{/admin(section='dashboard')}"
+               th:class="${section == 'dashboard'} ? 'block p-2 bg-blue-600 rounded' : 'block p-2 hover:bg-blue-600 rounded'">
+              Dashboard
+            </a>
+          </li>
+          <li>
+            <a th:href="@{/admin(section='products')}"
+               th:class="${section == 'products'} ? 'block p-2 bg-blue-600 rounded' : 'block p-2 hover:bg-blue-600 rounded'">
+              Quản lý sản phẩm
+            </a>
+          </li>
+          <li>
+            <a th:href="@{/admin(section='customers')}"
+               th:class="${section == 'customers'} ? 'block p-2 bg-blue-600 rounded' : 'block p-2 hover:bg-blue-600 rounded'">
+              Quản lý người dùng
+            </a>
+          </li>
+          <li>
+            <a th:href="@{/admin(section='orders')}"
+               th:class="${section == 'orders'} ? 'block p-2 bg-blue-600 rounded' : 'block p-2 hover:bg-blue-600 rounded'">
+              Quản lý đơn hàng
+            </a>
+          </li>
+          <li>
+            <a th:href="@{/logout}" class="block p-2 hover:bg-red-600 rounded">Đăng xuất</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>

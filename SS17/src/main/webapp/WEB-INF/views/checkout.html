@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <title>Thanh toán</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100">
+    <div class="container mx-auto p-4">
+      <div class="flex justify-end mb-4">
+        <div th:if="${session.customerId}">
+          <a href="/logout" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Đăng xuất</a>
+        </div>
+        <div th:unless="${session.customerId}">
+          <a href="/login" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Đăng nhập</a>
+        </div>
+      </div>
+      <h1 class="text-3xl font-bold text-center mb-8">Thanh toán</h1>
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-xl font-semibold mb-4">Thông tin đơn hàng</h2>
+        <table class="w-full mb-4">
+          <thead>
+            <tr class="border-b">
+              <th class="text-left py-2">Sản phẩm</th>
+              <th class="text-left py-2">Giá</th>
+              <th class="text-left py-2">Số lượng</th>
+              <th class="text-left py-2">Tổng</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="cart : ${cartItems}" class="border-b">
+              <td class="py-2" th:each="product : ${products}" th:if="${product.id == cart.productId}" th:text="${product.productName}"></td>
+              <td class="py-2" th:each="product : ${products}" th:if="${product.id == cart.productId}" th:text="'$' + ${product.price}"></td>
+              <td class="py-2" th:text="${cart.quantity}"></td>
+              <td class="py-2" th:each="product : ${products}" th:if="${product.id == cart.productId}" th:text="'$' + ${product.price * cart.quantity}"></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="text-xl font-bold mb-4">Tổng cộng: <span th:text="'$' + ${total}"></span></div>
+        <h2 class="text-xl font-semibold mb-4">Thông tin nhận hàng</h2>
+        <form th:action="@{/checkout}" method="post" class="max-w-md">
+          <div class="mb-4">
+            <label for="recipientName" class="block text-gray-700">Tên người nhận</label>
+            <input type="text" id="recipientName" name="recipientName" th:value="${order.recipientName}" class="w-full border rounded px-2 py-1">
+          </div>
+          <div class="mb-4">
+            <label for="phoneNumber" class="block text-gray-700">Số điện thoại</label>
+            <input type="text" id="phoneNumber" name="phoneNumber" th:value="${order.phoneNumber}" class="w-full border rounded px-2 py-1">
+          </div>
+          <div class="mb-4">
+            <label for="address" class="block text-gray-700">Địa chỉ</label>
+            <input type="text" id="address" name="address" th:value="${order.address}" class="w-full border rounded px-2 py-1">
+          </div>
+          <button type="submit" class="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Xác nhận thanh toán</button>
+        </form>
+        <a href="/cart" class="mt-4 inline-block bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Quay lại giỏ hàng</a>
+      </div>
+    </div>
+  </body>
+</html>

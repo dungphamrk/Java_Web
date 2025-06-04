@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:text="${movie.id == null ? 'Thêm phim mới' : 'Chỉnh sửa phim'}"></title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="bg-gray-100 p-4">
+        <div class="container mx-auto mt-8 max-w-2xl bg-white p-8 rounded-lg shadow-md">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800" th:text="${movie.id == null ? 'Thêm phim mới' : 'Chỉnh sửa phim'}"></h2>
+
+            <form th:action="@{${movie.id == null ? '/movies/add' : '/movies/edit/' + movie.id}}"
+                  th:object="${movie}" method="post">
+
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Tên phim *</label>
+                    <input type="text" th:field="*{title}"
+                           th:classappend="${#fields.hasErrors('title')} ? 'border-red-500' : 'border-gray-300'"
+                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-blue-500 focus:border-blue-500">
+                    <div class="text-red-500 text-xs italic mt-1" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Đạo diễn *</label>
+                    <input type="text" th:field="*{director}"
+                           th:classappend="${#fields.hasErrors('director')} ? 'border-red-500' : 'border-gray-300'"
+                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-blue-500 focus:border-blue-500">
+                    <div class="text-red-500 text-xs italic mt-1" th:if="${#fields.hasErrors('director')}" th:errors="*{director}"></div>
+                </div>
+
+                <div class="flex flex-wrap -mx-2 mb-4">
+                    <div class="w-full md:w-1/2 px-2 mb-4 md:mb-0">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Năm phát hành *</label>
+                        <input type="number" th:field="*{releaseYear}"
+                               th:classappend="${#fields.hasErrors('releaseYear')} ? 'border-red-500' : 'border-gray-300'"
+                               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-blue-500 focus:border-blue-500">
+                        <div class="text-red-500 text-xs italic mt-1" th:if="${#fields.hasErrors('releaseYear')}" th:errors="*{releaseYear}"></div>
+                    </div>
+                    <div class="w-full md:w-1/2 px-2">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Thời lượng (phút) *</label>
+                        <input type="number" th:field="*{duration}"
+                               th:classappend="${#fields.hasErrors('duration')} ? 'border-red-500' : 'border-gray-300'"
+                               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-blue-500 focus:border-blue-500">
+                        <div class="text-red-500 text-xs italic mt-1" th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}"></div>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Thể loại</label>
+                    <input type="text" th:field="*{genre}"
+                           class="shadow appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-blue-500 focus:border-blue-500">
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Ngôn ngữ</label>
+                    <input type="text" th:field="*{language}"
+                           class="shadow appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-blue-500 focus:border-blue-500">
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">URL Poster</label>
+                    <input type="url" th:field="*{poster}"
+                           th:classappend="${#fields.hasErrors('poster')} ? 'border-red-500' : 'border-gray-300'"
+                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-blue-500 focus:border-blue-500">
+                    <div class="text-red-500 text-xs italic mt-1" th:if="${#fields.hasErrors('poster')}" th:errors="*{poster}"></div>
+                </div>
+
+                <div class="mb-6">
+                    <div class="flex items-center">
+                        <input type="checkbox" th:field="*{status}" class="form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
+                        <label class="ml-2 block text-gray-700 text-sm font-bold">Đang chiếu</label>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <button type="submit"
+                            class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-150 ease-in-out">
+                        <span th:text="${movie.id == null ? 'Thêm phim' : 'Cập nhật'}"></span>
+                    </button>
+                    <a th:href="@{/movies}" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-150 ease-in-out">Hủy</a>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Quản lý phòng chiếu</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="bg-gray-100 p-4">
+        <div class="container mx-auto mt-8 max-w-6xl">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-800">Danh sách phòng chiếu</h2>
+                <a th:href="@{/screen-rooms/add}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-md transition duration-150 ease-in-out">Thêm phòng chiếu mới</a>
+            </div>
+
+            <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tên phòng</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rạp chiếu</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Loại màn hình</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sức chứa</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Số ghế đã tạo</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Trạng thái</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        <tr th:each="screenRoom : ${screenRooms}">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900" th:text="${screenRoom.id}"></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900" th:text="${screenRoom.roomName}"></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900" th:text="${screenRoom.theater?.theaterName ?: 'Chưa gán'}"></td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full"
+                          th:classappend="${screenRoom.screenType == '2D'} ? 'bg-blue-100 text-blue-800' : (${screenRoom.screenType == '3D'} ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800')"
+                          th:text="${screenRoom.screenType}"></span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900" th:text="${screenRoom.capacity}"></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900" th:text="${#lists.size(screenRoom.seats)}"></td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full"
+                          th:classappend="${screenRoom.status} ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'"
+                          th:text="${screenRoom.status} ? 'Đang hoạt động' : 'Ngừng hoạt động'"></span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <a th:href="@{|/screen-rooms/edit/${screenRoom.id}|}" class="text-yellow-600 hover:text-yellow-900 mr-3 px-3 py-1 border border-yellow-600 rounded-md transition duration-150 ease-in-out text-sm">Sửa</a>
+                                <a th:href="@{|/screen-rooms/delete/${screenRoom.id}|}" class="text-red-600 hover:text-red-900 px-3 py-1 border border-red-600 rounded-md transition duration-150 ease-in-out text-sm"
+                                   onclick="return confirm('Bạn có chắc muốn xóa phòng chiếu này?')">Xóa</a>
+                                <a th:href="@{|/screen-rooms/seats/${screenRoom.id}|}" class="text-blue-600 hover:text-blue-900 ml-3 px-3 py-1 border border-blue-600 rounded-md transition duration-150 ease-in-out text-sm">Xem ghế</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div th:if="${#lists.isEmpty(screenRooms)}" class="bg-blue-100 border-t-4 border-blue-500 rounded-b text-blue-900 px-4 py-3 shadow-md mt-6" role="alert">
+                <div class="flex items-center">
+                    <div class="py-1"><svg class="fill-current h-6 w-6 text-blue-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 .5C4.477 0 0 4.477 0 10s4.477 10 10 10 10-4.477 10-10S15.523 0 10 .5zM9 5h2v6H9V5zm1 10a1 1 0 100-2 1 1 0 000 2z"/></svg></div>
+                    <div>
+                        <p class="font-bold">Chưa có phòng chiếu nào.</p>
+                        <p class="text-sm">Hãy <a th:href="@{/screen-rooms/add}" class="font-bold underline hover:text-blue-700">thêm phòng chiếu đầu tiên</a>.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

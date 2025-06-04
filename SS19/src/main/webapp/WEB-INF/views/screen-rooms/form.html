@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:text="${screenRoom.id == null ? 'Thêm phòng chiếu mới' : 'Chỉnh sửa phòng chiếu'}"></title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="bg-gray-100 p-4">
+        <div class="container mx-auto mt-8 max-w-2xl bg-white p-8 rounded-lg shadow-md">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800" th:text="${screenRoom.id == null ? 'Thêm phòng chiếu mới' : 'Chỉnh sửa phòng chiếu'}"></h2>
+
+            <form th:action="@{${screenRoom.id == null ? '/screen-rooms/add' : '/screen-rooms/edit/' + screenRoom.id}}"
+                  th:object="${screenRoom}" method="post">
+
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Tên phòng chiếu *</label>
+                    <input type="text" th:field="*{roomName}"
+                           th:classappend="${#fields.hasErrors('roomName')} ? 'border-red-500' : 'border-gray-300'"
+                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-blue-500 focus:border-blue-500"
+                           placeholder="Ví dụ: Phòng A1, Phòng VIP 1...">
+                    <div class="text-red-500 text-xs italic mt-1" th:if="${#fields.hasErrors('roomName')}" th:errors="*{roomName}"></div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Rạp chiếu *</label>
+                    <select th:field="*{theater}"
+                            th:classappend="${#fields.hasErrors('theater')} ? 'border-red-500' : 'border-gray-300'"
+                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-blue-500 focus:border-blue-500">
+                        <option value="">-- Chọn rạp chiếu --</option>
+                        <option th:each="theater : ${theaters}"
+                                th:value="${theater.id}"
+                                th:text="${theater.theaterName + ' - ' + theater.address}"></option>
+                    </select>
+                    <div class="text-red-500 text-xs italic mt-1" th:if="${#fields.hasErrors('theater')}" th:errors="*{theater}"></div>
+                </div>
+
+                <div class="flex flex-wrap -mx-2 mb-4">
+                    <div class="w-full md:w-1/2 px-2 mb-4 md:mb-0">
+                        <div class="mb-0">
+                            <label class="block text-gray-700 text-sm font-bold mb-2">Loại màn hình *</label>
+                            <select th:field="*{screenType}"
+                                    th:classappend="${#fields.hasErrors('screenType')} ? 'border-red-500' : 'border-gray-300'"
+                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-blue-500 focus:border-blue-500">
+                                <option value="">-- Chọn loại màn hình --</option>
+                                <option value="2D">2D</option>
+                                <option value="3D">3D</option>
+                                <option value="IMAX">IMAX</option>
+                            </select>
+                            <div class="text-red-500 text-xs italic mt-1" th:if="${#fields.hasErrors('screenType')}" th:errors="*{screenType}"></div>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-1/2 px-2">
+                        <div class="mb-0">
+                            <label class="block text-gray-700 text-sm font-bold mb-2">Sức chứa (số ghế) *</label>
+                            <input type="number" th:field="*{capacity}"
+                                   th:classappend="${#fields.hasErrors('capacity')} ? 'border-red-500' : 'border-gray-300'"
+                                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-blue-500 focus:border-blue-500"
+                                   min="1" max="500" placeholder="Ví dụ: 100">
+                            <div class="text-red-500 text-xs italic mt-1" th:if="${#fields.hasErrors('capacity')}" th:errors="*{capacity}"></div>
+                            <p class="text-gray-600 text-xs mt-1">Hệ thống sẽ tự động tạo ghế theo sức chứa này</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <div class="flex items-center">
+                        <input type="checkbox" th:field="*{status}" class="form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
+                        <label class="ml-2 block text-gray-700 text-sm font-bold">Đang hoạt động</label>
+                    </div>
+                </div>
+
+                <div class="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-6" role="alert" th:if="${screenRoom.id == null}">
+                    <div class="flex">
+                        <div class="py-1"><svg class="fill-current h-6 w-6 text-blue-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 .5C4.477 0 0 4.477 0 10s4.477 10 10 10 10-4.477 10-10S15.523 0 10 .5zM9 5h2v6H9V5zm1 10a1 1 0 100-2 1 1 0 000 2z"/></svg></div>
+                        <div>
+                            <p class="font-bold">Lưu ý:</p>
+                            <p class="text-sm">Sau khi tạo phòng chiếu, hệ thống sẽ tự động tạo ghế theo quy tắc A1, A2, ..., B1, B2, ... với số lượng bằng sức chứa.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <button type="submit"
+                            class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-150 ease-in-out">
+                        <span th:text="${screenRoom.id == null ? 'Thêm phòng chiếu' : 'Cập nhật'}"></span>
+                    </button>
+                    <a th:href="@{/screen-rooms}" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-150 ease-in-out">Hủy</a>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>

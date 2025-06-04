@@ -8,6 +8,6 @@
         <h1><%= "Hello World!" %>
         </h1>
         <br/>
-        <a href="admin">B1</a>
+        <a class="nav-link" href="${pageContext.request.contextPath}/admin?section=user">B1 - Quản lý khách hàng</a>
     </body>
 </html>

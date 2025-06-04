@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:text="${theater.id == null ? 'Thêm rạp mới' : 'Chỉnh sửa rạp'}"></title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="bg-gray-100 p-4">
+        <div class="container mx-auto mt-8 max-w-2xl bg-white p-8 rounded-lg shadow-md">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800" th:text="${theater.id == null ? 'Thêm rạp mới' : 'Chỉnh sửa rạp'}"></h2>
+
+            <form th:action="@{${theater.id == null ? '/theaters/add' : '/theaters/edit/' + theater.id}}"
+                  th:object="${theater}" method="post">
+
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Tên rạp *</label>
+                    <input type="text" th:field="*{theaterName}"
+                           th:classappend="${#fields.hasErrors('theaterName')} ? 'border-red-500' : 'border-gray-300'"
+                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-blue-500 focus:border-blue-500">
+                    <div class="text-red-500 text-xs italic mt-1" th:if="${#fields.hasErrors('theaterName')}" th:errors="*{theaterName}"></div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Địa chỉ *</label>
+                    <input type="text" th:field="*{address}"
+                           th:classappend="${#fields.hasErrors('address')} ? 'border-red-500' : 'border-gray-300'"
+                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-blue-500 focus:border-blue-500">
+                    <div class="text-red-500 text-xs italic mt-1" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Số phòng chiếu *</label>
+                    <input type="number" th:field="*{numberScreenRoom}"
+                           th:classappend="${#fields.hasErrors('numberScreenRoom')} ? 'border-red-500' : 'border-gray-300'"
+                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-blue-500 focus:border-blue-500">
+                    <div class="text-red-500 text-xs italic mt-1" th:if="${#fields.hasErrors('numberScreenRoom')}" th:errors="*{numberScreenRoom}"></div>
+                </div>
+
+                <div class="mb-6">
+                    <div class="flex items-center">
+                        <input type="checkbox" th:field="*{status}" class="form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
+                        <label class="ml-2 block text-gray-700 text-sm font-bold">Đang hoạt động</label>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <button type="submit"
+                            class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-150 ease-in-out">
+                        <span th:text="${theater.id == null ? 'Thêm rạp' : 'Cập nhật'}"></span>
+                    </button>
+                    <a th:href="@{/theaters}" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-150 ease-in-out">Hủy</a>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>

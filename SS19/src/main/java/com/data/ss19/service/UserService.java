@@ -6,7 +6,9 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
+
 @Service
 public class UserService {
     @Autowired
@@ -19,8 +21,16 @@ public class UserService {
         return userRepository.getUserById(id);
     }
 
-    public void updateUser(User User) {
-        userRepository.updateUser(User);
+    public void saveUser(User user) {
+        userRepository.saveUser(user);
+    }
+
+    public void updateUser(User user) {
+        userRepository.updateUser(user);
+    }
+
+    public void deleteUser(Long id) {
+        userRepository.deleteUser(id);
     }
 
     public User getUserByUsername(String username) {
@@ -39,11 +49,7 @@ public class UserService {
         return userRepository.getTotalUsers(search);
     }
 
-
     public long getTotalUsers() {
-        try (var session = sessionFactory.openSession()) {
-            Query<Long> query = session.createQuery("SELECT COUNT(*) FROM User", Long.class);
-            return query.uniqueResult();
-        }
+        return userRepository.getTotalUsers();
     }
 }

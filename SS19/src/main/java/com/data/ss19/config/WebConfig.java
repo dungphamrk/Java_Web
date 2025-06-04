@@ -39,7 +39,7 @@ import java.util.Properties;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "com.data.ss17.*")
+@ComponentScan(basePackages = "com.data.ss19.*")
 @EnableTransactionManagement
 public class WebConfig implements WebMvcConfigurer {
 
@@ -50,7 +50,7 @@ public class WebConfig implements WebMvcConfigurer {
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/ss17");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/ss19");
         dataSource.setUsername("root");
         dataSource.setPassword("1111");
         return dataSource;
@@ -60,7 +60,7 @@ public class WebConfig implements WebMvcConfigurer {
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sf = new LocalSessionFactoryBean();
         sf.setDataSource(dataSource()); // Gắn kết với DataSource đã cấu hình
-        sf.setPackagesToScan("com.data.ss17.model"); // Chỉ định package chứa các @Entity
+        sf.setPackagesToScan("com.data.ss19.model"); // Chỉ định package chứa các @Entity
 
         // Cấu hình các thuộc tính Hibernate
         Properties props = new Properties();

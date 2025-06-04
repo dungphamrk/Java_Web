@@ -43,6 +43,6 @@ public class UserController {
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("search", search);
         model.addAttribute("section", "User");
-        return "admin";
+        return "user-list";
     }
 }
